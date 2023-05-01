@@ -1,0 +1,16 @@
+
+<h1>Real time products</h1>
+
+<div id="divList"></div>
+
+<form action="/realtimeproducts" method="post">
+    Title:<input type="text" name="title"><br>
+    Description:<input type="text" name="description"><br>
+    Price: <input type="number" name="price"><br>
+    Category: <input type="text" name="category"><br>
+    Stock: <input type="number" name="stock"><br>
+    <button type="submit" id="createProd">Create product</button> 
+</form>
+
+<script src="/socket.io/socket.io.js"></script> 
+<script src="/src/public/socket/socketClient.js"></script>
