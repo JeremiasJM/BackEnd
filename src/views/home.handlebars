@@ -2,11 +2,11 @@
 <h1 class="text-center py-5">Productos</h1>
 <div class="container">
     <div class="row justify-content-around">
-{{#each pList}}
+{{#each products}}
         
     <div class="col-4">
         <div class="card">
-        <img src={{this.thumbnail}} class="card-img-top" alt={{this.title}}>
+        <img src={{this.photo}} class="card-img-top" alt={{this.title}}>
         <div class="card-body text-center">
             <h5 class="card-title fs-4">{{this.title}}</h5>
             <p class="card-text ">{{this.description}}</p>
