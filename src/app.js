@@ -7,7 +7,8 @@ import rtpRouter from './Routers/rtp.router.js'
 import __dirname from './utils.js'
 import { Server } from 'socket.io'
 import mongoose from 'mongoose';
-import messagesRouter from './Routers/messages.router.js';
+import chatRouter from './Routers/chat.router.js';
+import { messageModel } from './dao/models/messageModel.js';
 
 
 const uri = 'mongodb+srv://topolobo:je10re9mias@cluster0.50zimzz.mongodb.net/ecommerce'
@@ -23,7 +24,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/products', productsRouter)
 app.use('/carts', cartsRouter)
 app.use('/', viewsRouter)
-app.use('/messages', messagesRouter)
+app.use('/chat', chatRouter)
 app.use('/realtimeproducts', rtpRouter)
 
 
@@ -33,20 +34,27 @@ try{
     console.log('DB connected!')
     const httpServer= app.listen(8080, ()=>console.log("server up"))
 
-    const io = new Server(httpServer)    
-   
-}catch(err){
-    console.log('Nose puede conectar a la DB')
+    const socketServer = new Server(httpServer);
+
+    socketServer.on("connection", (socketClient) => {
+        
+        console.log("User conected");
+       
+        socketClient.on("newMessage", async (message) => {
+            try {
+                console.log(message);
+                let newMessage = await messageModel.create({
+                    user: message.email.value,
+                    message: message.message,
+                });
+                console.log("app", newMessage);
+                socketServer.emit("emitMessage", newMessage);
+            } catch (error) {
+                console.log(error);
+                socketClient.emit("error", error);
+            }
+        });
+    });
+} catch (error) {
+    console.log(error);
 }
-
-
-
-/* const httpServer= app.listen(8080, ()=>console.log("server up"))
-
-const socketServer = new Server(httpServer) 
-
-socketServer.on('connection', socketClient =>{
-    socketClient.on('productList', pList =>{
-        socketServer.emit(pList)
-    })
-}) */
