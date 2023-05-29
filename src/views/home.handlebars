@@ -1,24 +1,14 @@
-<section>
-<h1 class="text-center py-5">Productos</h1>
-<div class="container">
-    <div class="row justify-content-around">
-{{#each products}}
-        
-    <div class="col-4">
-        <div class="card">
-        <img src={{this.photo}} class="card-img-top" alt={{this.title}}>
-        <div class="card-body text-center">
-            <h5 class="card-title fs-4">{{this.title}}</h5>
-            <p class="card-text ">{{this.description}}</p>
-            <p class="card-text fs-6 fw-bold">Precio:${{this.price}}</p>
-            <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-primary">Añadir al carrito</a>
-            </div>
-        </div>
-        </div>
-        </div>
-{{/each}}
+<h3>Productos</h3>
+{{#each docs}}
+    <div>
+        <h4>{{this.title}}</h4>
+        <img src="https://sinteplastconstruccion.com.ar/assets/img/sinteplastconstruccion.com.ar/photos/w300/{{this.thumbnails}}"  alt="foto producto" width="100">
+        <p>{{this.description}}</p>
+        <p>Precio: ${{this.price}}</p>
+        <p>Categoría: {{this.category}}</p>
+        <p>Imagen: {{this.thumbnails}}</p>
+        <p>Status: {{this.status}}</p>
+        <p>Código: {{this.code}}</p>
+        <p>Stock: {{this.stock}}</p>
     </div>
-</div>
-
-</section>
+{{/each}}

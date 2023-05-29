@@ -1,59 +1,194 @@
-[
-    {
-        "id":1,
-        "title":"Cozy Knit Sweater",
-        "description":"Stay warm and stylish in our cozy knit sweater. Made from soft, breathable material, this sweater is perfect for cool weather. Features a crew neck and ribbed cuffs and hem. Available in multiple colors.",
-        "price":50,
-        "thumbnail":"https://example.com/cozy-knit-sweater.jpg",
-        "code":"KNIT-001",
-        "stock":100
-        },
-        {
-            "id":2,
-            "title":"Wireless Bluetooth Earbuds",
-            "description":"Enjoy your music on the go with our wireless Bluetooth earbuds. With high-quality sound and noise-cancelling technology, these earbuds are perfect for commuting or working out. Comes with a charging case for on-the-go convenience.",
-            "price":75,
-            "thumbnail":
-            "https://example.com/wireless-earbuds.jpg",
-            "code":"EAR-001",
-            "stock":50
-        },
-        {
-            "id":3,
-            "title":"Essential Oil Diffuser",
-            "description":"Create a relaxing atmosphere in your home with our essential oil diffuser. Made from durable materials, this diffuser features a color-changing LED light and auto shut-off function. Perfect for use with your favorite essential oils.",
-            "price":40,
-            "thumbnail":"https://example.com/essential-oil-diffuser.jpg",
-            "code":"DIFF-001",
-            "stock":75
-        },
-        {
-            "id":4,
-            "title":"Portable Charger",
-            "description":"Stay connected on-the-go with our portable charger. This compact charger is compatible with most smartphones and can provide up to two full charges. Comes with a convenient carrying pouch.",
-            "price":30,
-            "thumbnail":"https://example.com/portable-charger.jpg",
-            "code":"CHRG-001",
-            "stock":150
-        },
-        {
-            "id":5,
-            "title":"Leather Wallet",
-            "description":"Keep your essentials organized with our leather wallet. Made from high-quality leather, this wallet features multiple card slots and a zippered coin pouch. Available in multiple colors.",
-            "price":60,
-            "thumbnail":"https://example.com/leather-wallet.jpg",
-            "code":"WLT-001",
-            "stock":50
-        },
-        {
-            "id":6,
-            "title":"Stainless Steel Water Bottle",
-            "description":"Stay hydrated in style with our stainless steel water bottle. Made from durable materials, this water bottle features a leak-proof lid and a double-walled design to keep drinks cold for up to 24 hours. Available in multiple colors.",
-            "code":"BTL-001",
-            "price":25,
-            "status":true,
-            "stock":200,
-            "category":"dos",
-            "thumbnails":"https://cdn.pixabay.com/photo/2016/10/26/19/00/domain-names-1772240_1280.png"
-        }
+[ 
+    
+      {
+        "title": "Product 1",
+        "description": "This is the description of Product 1.",
+        "price": 19.99,
+        "code": "P001",
+        "stock": 10,
+        "thumbnails": ["product1_thumb1.jpg", "product1_thumb2.jpg"],
+        "category": "Category 1",
+        "status": true
+      },
+      {
+        "title": "Product 2",
+        "description": "This is the description of Product 2.",
+        "price": 29.99,
+        "code": "P002",
+        "stock": 5,
+        "thumbnails": ["product2_thumb1.jpg", "product2_thumb2.jpg"],
+        "category": "Category 2",
+        "status": true
+      },
+      {
+        "title": "Product 3",
+        "description": "This is the description of Product 3.",
+        "price": 9.99,
+        "code": "P003",
+        "stock": 0,
+        "thumbnails": ["product3_thumb1.jpg", "product3_thumb2.jpg"],
+        "category": "Category 1",
+        "status": false
+      },
+      {
+        "title": "Product 4",
+        "description": "This is the description of Product 4.",
+        "price": 14.99,
+        "code": "P004",
+        "stock": 15,
+        "thumbnails": ["product4_thumb1.jpg", "product4_thumb2.jpg"],
+        "category": "Category 3",
+        "status": true
+      },
+      {
+        "title": "Product 5",
+        "description": "This is the description of Product 5.",
+        "price": 39.99,
+        "code": "P005",
+        "stock": 2,
+        "thumbnails": ["product5_thumb1.jpg", "product5_thumb2.jpg"],
+        "category": "Category 2",
+        "status": true
+      },
+      {
+        "title": "Product 6",
+        "description": "This is the description of Product 6.",
+        "price": 24.99,
+        "code": "P006",
+        "stock": 8,
+        "thumbnails": ["product6_thumb1.jpg", "product6_thumb2.jpg"],
+        "category": "Category 1",
+        "status": true
+      },
+      {
+        "title": "Product 7",
+        "description": "This is the description of Product 7.",
+        "price": 11.99,
+        "code": "P007",
+        "stock": 0,
+        "thumbnails": ["product7_thumb1.jpg", "product7_thumb2.jpg"],
+        "category": "Category 3",
+        "status": false
+      },
+      {
+        "title": "Product 8",
+        "description": "This is the description of Product 8.",
+        "price": 34.99,
+        "code": "P008",
+        "stock": 6,
+        "thumbnails": ["product8_thumb1.jpg", "product8_thumb2.jpg"],
+        "category": "Category 2",
+        "status": true
+      },
+      {
+        "title": "Product 9",
+        "description": "This is the description of Product 9.",
+        "price": 17.99,
+        "code": "P009",
+        "stock": 3,
+        "thumbnails": ["product9_thumb1.jpg", "product9_thumb2.jpg"],
+        "category": "Category 1",
+        "status": true
+      },
+      {
+        "title": "Product 10",
+        "description": "This is the description of Product 10.",
+        "price": 49.99,
+        "code": "P010",
+        "stock": 12,
+        "thumbnails": ["product10_thumb1.jpg", "product10_thumb2.jpg"],
+        "category": "Category 2",
+        "status": true
+      },
+      {
+        "title": "Product 11",
+        "description": "This is the description of Product 11.",
+        "price": 49.99,
+        "code": "P011",
+        "stock": 11,
+        "thumbnails": ["product11_thumb1.jpg", "product11_thumb2.jpg"],
+        "category": "Category 3",
+        "status": true
+      },
+      {
+        "title": "Product 12",
+        "description": "This is the description of Product 12.",
+        "price": 149.99,
+        "code": "P012",
+        "stock": 12,
+        "thumbnails": ["product12_thumb1.jpg", "product12_thumb2.jpg"],
+        "category": "Category 3",
+        "status": false
+      },
+      {
+        "title": "Product 13",
+        "description": "This is the description of Product 13.",
+        "price": 19.99,
+        "code": "P013",
+        "stock": 13,
+        "thumbnails": ["product13_thumb1.jpg", "product13_thumb2.jpg"],
+        "category": "Category 3",
+        "status": false
+      },
+      {
+        "title": "Product 14",
+        "description": "This is the description of Product 14.",
+        "price": 14.99,
+        "code": "P014",
+        "stock": 14,
+        "thumbnails": ["product14_thumb1.jpg", "product14_thumb2.jpg"],
+        "category": "Category 3",
+        "status": true
+      },
+      {
+        "title": "Product 15",
+        "description": "This is the description of Product 15.",
+        "price": 5.99,
+        "code": "P015",
+        "stock": 15,
+        "thumbnails": ["product15_thumb1.jpg", "product15_thumb2.jpg"],
+        "category": "Category 3",
+        "status": true
+      },
+      {
+        "title": "Product 16",
+        "description": "This is the description of Product 16.",
+        "price": 16.99,
+        "code": "P016",
+        "stock": 16,
+        "thumbnails": ["product16_thumb1.jpg", "product16_thumb2.jpg"],
+        "category": "Category 4",
+        "status": false
+      },
+      {
+        "title": "Product 17",
+        "description": "This is the description of Product 17.",
+        "price": 179.99,
+        "code": "P017",
+        "stock": 17,
+        "thumbnails": ["product17_thumb1.jpg", "product17_thumb2.jpg"],
+        "category": "Category 4",
+        "status": false
+      },
+      {
+        "title": "Product 18",
+        "description": "This is the description of Product 18.",
+        "price": 18.99,
+        "code": "P018",
+        "stock": 18,
+        "thumbnails": ["product18_thumb1.jpg", "product18_thumb2.jpg"],
+        "category": "Category 4",
+        "status": true
+      },
+      {
+        "title": "Product 19",
+        "description": "This is the description of Product 19.",
+        "price": 19.99,
+        "code": "P019",
+        "stock": 19,
+        "thumbnails": ["product19_thumb1.jpg", "product19_thumb2.jpg"],
+        "category": "Category 4",
+        "status": true
+      }
+      
 ]
