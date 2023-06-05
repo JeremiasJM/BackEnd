@@ -1,28 +1,26 @@
-<link rel="stylesheet" href="css/chatStyles.css">
-<div class="chat">
-    <h3>Chat MongoDB</h3>
-    <div class="chatbox" id="chatbox">
-        {{#each messages}}
-            <div class="message" user="{{this.user}}">
-                <div class="email">
-                    {{this.user}}
-                </div>
-                <div class="text">
-                    {{this.message}}
-                </div>
-                <div class="date">
-                    {{this.date}}
+
+<h2>Carro</h2>
+<div class="cart detail">
+    {{#each products}}
+        <div class="product">
+            <h3>{{this.product.title}}</h3>
+            <div class="details">
+                <img
+                    src="https://sinteplastconstruccion.com.ar/assets/img/sinteplastconstruccion.com.ar/photos/w300/{{this.product.thumbnails}}"
+                    alt="foto producto"
+                    width="100"
+                />
+                <div class="info">
+                    <h4>{{this.product.description}}</h4>
+                    <p>Precio: ${{this.product.price}}</p>
+                    <p>Cantidad: {{this.quantity}}</p>
+                    <p>Código: {{this.product.code}}</p>
+                    <a
+                        href="../products/{{this.product._id}}"
+                        class="verproducto"
+                    >Ver Producto</a>
                 </div>
             </div>
-        {{/each}}
-    </div>
-    <form id="newMessage">
-        <h4>Mensaje</h4>
-        <textarea name="message" id="message" cols="20" rows="1"></textarea>
-        <button type="submit">Enviar</button>
-    </form>
-
+        </div>
+    {{/each}}
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="../scripts/chatScocketClient.js"></script>

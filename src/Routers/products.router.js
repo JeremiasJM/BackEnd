@@ -4,6 +4,13 @@ import { ProductManagerDB } from "../dao/Manager/ProductManagerDB.js";
 const ProductRouter = Router();
 const prod = new ProductManagerDB();
 
+ProductRouter.use((req, res, next) => {
+    if (!req.session.user) {
+        res.status(401).send({error:5,errortext:'Acceso no autorizado'});
+    } else {
+        next()
+    }
+});
 ProductRouter.get("/", async (req, res) => {
     let { limit = 10, page = 1, query, sort } = req.query;
     try {

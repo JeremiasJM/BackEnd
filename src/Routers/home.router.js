@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     let { limit=10, page=1, query, sort } = req.query;
     try {
         const products = await prod.getProducts(limit, page, query, sort);
-        res.status(200).send(products);
+        res.render("home", products)
     } catch (error) {
         res.status(400).send(error);
     }

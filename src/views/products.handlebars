@@ -1,62 +1,64 @@
 <link rel="stylesheet" href="../public/css/productsStyles.css">
-<h3>Productos</h3>
+<h3 class="container text-center">Productos</h3>
+<h4>Bienvenido{{user.email}} </h4>
 <div class="filters">
-    <div class="category">
-        <a href='products'>Todas las categorías</a>
-        <a href='?query={"category":"Impermeabilizantes"}'>Impermeabilizantes</a>
-        <a href='?query={"category":"Reparación de hormigón"}'>Reparación de hormigón</a>
-        <a href='?query={"category":"Aditivos"}'>Aditivos</a>
-        <a href='?query={"category":"Grout"}'>Grout</a>
-        <a href='?query={"category":"Selladores"}'>Selladores</a>
-        <a href='?query={"category":"Adhesivos"}'>Adhesivos</a>
-        <a href='?query={"category":"Pisos Decorativos"}'>Pisos Decorativos</a>
-        <a href='?query={"category":"Revoques"}'>Revoques</a>
-        <a href='?query={"category":"Pastinas"}'>Pastinas</a>
-        <a href='?query={"category":"Pisos de Alto desempeño"}'>Pisos de Alto desempeño</a>
-        <a href='?query={"category":"Complementos"}'>Complementos</a>
+    <div class="container text-center ">
+        <a class="link-dark" href='products'>Todas las categorías</a>
+        <a class="link-dark" href='?query={"category":"primero"}'>Categoria 1</a>
+        <a class="link-dark" href='?query={"category":"segundo"}'>Categoria 2</a>
+        <a class="link-dark" href='?query={"category":"tercero"}'>Categoria 3</a>
+        <a class="link-dark"href='?query={"category":"cuarto"}'>Categoria 4</a>
+        <a class="link-dark" href='?query={"category":"quinto"}'>Categoria 5</a>
+      
     </div>
-    <div class="stock">
-        <a href='?query={"stock":{"$gt":"0"}}'>Productos con stock</a>
-        <a href='products'>Todos los productos</a>
+    <div class="container text-center">
+        <a class="link-dark" href='?query={"stock":{"$gt":"0"}}'>Productos con stock</a>
+        <a class="link-dark" href='products'>Todos los productos</a>
     </div>
 </div>
-<div class="paginado">
+<div class="container text-center">
         {{#if hasPrevPage }}
-            <a class="avtive" href='{{firstLink}}'>Primera</a>
-            <a class="active" href='{{prevLink}}'>Anterior</a>
+            <a class="link-dark" href='{{firstLink}}'>Primera</a>
+            <a class="link-dark" href='{{prevLink}}'>Anterior</a>
         {{else}}
-            <a class="disabled">Primera</a>
-            <a class="disabled">Anterior</a>
+            <a class="link-dark">Primera</a>
+            <a class="link-dark">Anterior</a>
         {{/if}}
         {{#if hasNextPage }}
-            <a class="avtive" href='{{nextLink}}'>Siguiente</a>
-            <a class="active"href='{{lastLink}}'>Ultima</a>
+            <a class="link-dark"  href='{{nextLink}}'>Siguiente</a>
+            <a class="link-dark" href='{{lastLink}}'>Ultima</a>
         {{else}}
-            <a class="disabled">Siguiente</a>
-            <a class="disabled">Ultima</a>
+            <a class="link-dark">Siguiente</a>
+            <a class="link-dark">Ultima</a>
         {{/if}}
 </div>
-<div class="limite">
-    <a href="?limit=5">ver 5</a>
-    <a href="?limit=10">ver 10</a>
-    <a href="?limit=20">ver 20</a>
-    <a href="?limit=50">ver 50</a>
+<div class="container text-center">
+    <a class="link-dark"  href="?limit=5">ver 5</a>
+    <a class="link-dark" href="?limit=10">ver 10</a>
+    <a class="link-dark" href="?limit=20">ver 20</a>
+    <a class="link-dark" href="?limit=50">ver 50</a>
 </div>
-<div class="products">
+
+<div class="container text-center">
+<div class=" row mt-3 ">
 {{#each payload}}
-    <div class="product">
-        <h4>{{this.title}}</h4>
-        <img src="https://sinteplastconstruccion.com.ar/assets/img/sinteplastconstruccion.com.ar/photos/w300/{{this.thumbnails}}"  alt="foto producto" width="100">
-        <p>{{this.description}}</p>
-        <p>Precio: ${{this.price}}</p>
-        <p>Categoría: {{this.category}}</p>
-        <p>Imagen: {{this.thumbnails}}</p>
-        <p>Status: {{this.status}}</p>
-        <p>Código: {{this.code}}</p>
-        <p>Stock: {{this.stock}}</p>
-        <input class type="button" value="Agregar al carro">
-        <a href="../products/{{this.id}}" class="verproducto">Ver detalles</a>
+    <div class="col mt-3 pb-2">
+        <div class="card">      
+            <img class="card-img-top" src="{{this.thumbnails}}"  alt="foto producto" width="100">
+            <h4 class="card-title">{{this.title}}</h4>
+            <p class="card-text">{{this.description}}</p>
+            <p class="card-text">Precio: ${{this.price}}</p>
+            <p class="card-text">Categoría: {{this.category}}</p>
+            <p class="card-text">Imagen: {{this.thumbnails}}</p>
+            <p class="card-text">Status: {{this.status}}</p>
+            <p class="card-text">Código: {{this.code}}</p>
+            <p class="card-text">Stock: {{this.stock}}</p>
+            <div class="mb-3 " >
+                <input class="btn btn-primary" type="button" value="Agregar al carro">
+                <a href="../products/{{this.id}}" class="btn btn-primary">Ver detalles</a>
+            </div>
+             </div>
     </div>
 {{/each}}
 </div>
-<script src="../scripts/productsScript.js"></script>
+</div>
