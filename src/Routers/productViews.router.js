@@ -22,8 +22,12 @@ router.get("/", async (req, res) => {
     let { limit, page, query, sort } = req.query;
     try {
         const productos = await prod.getProducts(limit, page, query, sort);
-        if(req.session.user) return res.render("products", productos);
-        res.send('No auth')
+        const user = req.session.user;
+        res.render("products", {
+            productos: productos,
+            user:user,
+            });
+        
         
     } catch (err) {
         res.status(400).send(err);

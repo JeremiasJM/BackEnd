@@ -1,14 +1,27 @@
-<h3>Bienvenidos A nuestra Tienda</h3>
-{{#each docs}}
-    <div>
-        <h4>{{title}}</h4>
-        <img src="https://images.pexels.com/photos/16297410/pexels-photo-16297410/free-photo-of-comida-plato-ensalada-cena.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="foto producto" width="100">
-        <p>{{description}}</p>
-        <p>Precio: ${{this.price}}</p>
-        <p>Categoría: {{this.category}}</p>
-        <p>Imagen: {{this.thumbnails}}</p>
-        <p>Status: {{this.status}}</p>
-        <p>Código: {{this.code}}</p>
-        <p>Stock: {{this.stock}}</p>
-    </div>
-{{/each}}
+<h1>Agregar productos</h1>
+<br>
+
+<form id="addForm">
+    <label for="title">Nombre del prodcuto</label>
+    <input type="text" name="title" id="title">
+    <br>
+    <label for="description">Descripción del prodcuto</label>
+    <br>
+    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+    <br>
+    <label for="price">Precio del prodcuto</label>
+    <input type="text" name="price" id="price">
+    <br>
+    <label for="thumbnail">Foto del prodcuto</label>
+    <input type="text" name="thumbnail" id="thumbnail">
+    <br>
+    <label for="stock">Stock del prodcuto</label>
+    <input type="text" name="stock" id="stock">
+    <br>
+    <label for="category">Categoria del prodcuto</label>
+    <input type="text" name="category" id="category">
+    <br>
+    <button type="submit">Ingresar Producto</button>
+</form>
+
+<script src="/js/home.js"></script>

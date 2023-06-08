@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { CartManagerDB } from "../dao/Manager/CartManagerDB.js";
 
-const Cartsrouter = Router();
+const cartsRouter = Router();
 const carro = new CartManagerDB();
 
-Cartsrouter.get("/", async (req, res) => {
+cartsRouter.get("/", async (req, res) => {
     try {
         const result = await carro.getCarts();
         if (result.error) {
@@ -16,7 +16,7 @@ Cartsrouter.get("/", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.get("/:cid", async (req, res) => {
+cartsRouter.get("/:cid", async (req, res) => {
     const cid = req.params.cid;
     try {
         const result = await carro.getCartById(cid);
@@ -29,7 +29,7 @@ Cartsrouter.get("/:cid", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.post("/", async (req, res) => {
+cartsRouter.post("/", async (req, res) => {
     try {
         const result = await carro.addCart();
         if (result.error) {
@@ -41,7 +41,7 @@ Cartsrouter.post("/", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.post("/:cid/product/:pid", async (req, res) => {
+cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     const newCartProduct = {
         cid: req.params.cid,
         pid: req.params.pid,
@@ -57,7 +57,7 @@ Cartsrouter.post("/:cid/product/:pid", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.delete("/:cid", async (req, res) => {
+cartsRouter.delete("/:cid", async (req, res) => {
     const cid = req.params.cid;
     try {
         const result = await carro.deleteAllProducts(cid);
@@ -70,7 +70,7 @@ Cartsrouter.delete("/:cid", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.delete("/:cid/product/:pid", async (req, res) => {
+cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
     const deleteCartProduct = {
         cid: req.params.cid,
         pid: req.params.pid,
@@ -86,7 +86,7 @@ Cartsrouter.delete("/:cid/product/:pid", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.put("/:cid/product/:pid", async (req, res) => {
+cartsRouter.put("/:cid/product/:pid", async (req, res) => {
     const updateProduct = {
         cid: req.params.cid,
         pid: req.params.pid,
@@ -104,7 +104,7 @@ Cartsrouter.put("/:cid/product/:pid", async (req, res) => {
         res.status(400).send(err);
     }
 });
-Cartsrouter.put("/:cid", async (req, res) => {
+cartsRouter.put("/:cid", async (req, res) => {
     const cid = req.params.cid;
     const products = req.body;
     console.log(cid,products)
@@ -119,4 +119,4 @@ Cartsrouter.put("/:cid", async (req, res) => {
         res.status(400).send(err);
     }
 });
-export default Cartsrouter;
+export default cartsRouter;

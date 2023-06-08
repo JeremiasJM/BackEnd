@@ -22,11 +22,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    role: {
-        type: String,
-        required: true,
-        default: "user",
+    rol: {
+        type: String,        
+        default: "sin rol"
     },
 });
-mongoose.set("strictQuery", false);
-export const userModel = mongoose.model(userCollection, userSchema);
+mongoose.set("strictQuery", false)
+const UserModel = mongoose.model(userCollection, userSchema)
+
+export default UserModel

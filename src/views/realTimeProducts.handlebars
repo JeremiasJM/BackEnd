@@ -1,16 +1,26 @@
+<h1>Realtime</h1>
+<br>
+<table id="productsTable">
+    <tr>
+        <td><strong>Producto</strong></td>
+        <td><strong>Descripción</strong></td>
+        <td><strong>Precio</strong></td>
+        <td><strong>Código</strong></td>
+        <td><strong>Stock</strong></td>
+        <td><strong>Categoría</strong></td>
+    </tr>
+    {{#each data}}
+    <tr>
+    <td>{{this.title}}</td>
+    <td>{{this.description}}</td>
+    <td>{{this.price}}</td>
+    <td>{{this.code}}</td>
+    <td>{{this.stock}}</td>
+    <td>{{this.category}}</td>
+    </tr>
+    {{/each}}  
+</table>
+<div id="moving"></div>
 
-<h1>Real time products</h1>
-
-<div id="divList"></div>
-
-<form action="/realtimeproducts" method="post">
-    Title:<input type="text" name="title"><br>
-    Description:<input type="text" name="description"><br>
-    Price: <input type="number" name="price"><br>
-    Category: <input type="text" name="category"><br>
-    Stock: <input type="number" name="stock"><br>
-    <button type="submit" id="createProd">Create product</button> 
-</form>
-
-<script src="/socket.io/socket.io.js"></script> 
-<script src="/src/public/socket/socketClient.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

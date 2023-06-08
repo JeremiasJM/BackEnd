@@ -1,17 +1,17 @@
 import { Router } from "express";
 import { ProductManagerDB } from "../dao/Manager/ProductManagerDB.js";
 
-const ProductRouter = Router();
+const productRouter = Router();
 const prod = new ProductManagerDB();
 
-ProductRouter.use((req, res, next) => {
+productRouter.use((req, res, next) => {
     if (!req.session.user) {
         res.status(401).send({error:5,errortext:'Acceso no autorizado'});
     } else {
         next()
     }
 });
-ProductRouter.get("/", async (req, res) => {
+productRouter.get("/", async (req, res) => {
     let { limit = 10, page = 1, query, sort } = req.query;
     try {
         const productos = await prod.getProducts(limit, page, query, sort);
@@ -20,7 +20,7 @@ ProductRouter.get("/", async (req, res) => {
         res.status(400).send(err);
     }
 });
-ProductRouter.get("/:id", async (req, res) => {
+productRouter.get("/:id", async (req, res) => {
     let id = req.params.id;
     try {
         const foundprod = await prod.getProductById(id);
@@ -32,7 +32,7 @@ ProductRouter.get("/:id", async (req, res) => {
         });
     }
 });
-ProductRouter.post("/", async (req, res) => {
+productRouter.post("/", async (req, res) => {
     const producto = req.body;
     try {
         const result = await prod.addProduct(producto);
@@ -45,7 +45,7 @@ ProductRouter.post("/", async (req, res) => {
         res.status(400).send(err);
     }
 });
-ProductRouter.put("/", async (req, res) => {
+productRouter.put("/", async (req, res) => {
     const producto = req.body;
     try {
         const result = await prod.updateProduct(producto);
@@ -58,7 +58,7 @@ ProductRouter.put("/", async (req, res) => {
         res.status(400).send(err);
     }
 });
-ProductRouter.delete("/:id", async (req, res) => {
+productRouter.delete("/:id", async (req, res) => {
     let id = req.params.id;
     try {
         const result = await prod.deleteProduct(id);
@@ -72,4 +72,4 @@ ProductRouter.delete("/:id", async (req, res) => {
     }
 });
 
-export default ProductRouter;
+export default productRouter;
