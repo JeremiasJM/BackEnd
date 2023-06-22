@@ -1,12 +1,18 @@
 import passport from "passport";
 import local from "passport-local";
+import passport_jwt, { ExtractJwt } from "passport-jwt";
 import UserModel from "../dao/models/user.model.js";
-import { createHash, isValidPassword } from "../utils.js";
+import {
+  createHash,
+  isValidPassword,
+  generateToken,
+  extractCookie,
+} from "../utils.js";
+import { JWT_PRIVATE_KEY } from "../utils.js";
 import GitHubStrategy from "passport-github2";
-/* import dotenv from 'dotenv'
-dotenv.config() */
 
-const LocalStrategy = local.Strategy;
+const LocalStrategy = local.Strategy
+const JWTStrategy = passport_jwt.Strategy
 
 const initializePassport = () => {
   passport.use(
@@ -87,11 +93,26 @@ const initializePassport = () => {
           }
 
           if (!isValidPassword(user, password)) return done(null, false);
+          const token = generateToken(user)
+          user.token= token
 
           return done(null, user);
         } catch (error) {
           done("error");
         }
+      }
+    )
+  );
+
+  passport.use(
+    "jwt",
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromExtractors([extractCookie]),
+        sercretOrKey: JWT_PRIVATE_KEY
+      },
+      async (jwt_payload, done) => {
+        done(null, jwt_payload);
       }
     )
   );
