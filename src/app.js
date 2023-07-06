@@ -9,10 +9,12 @@ import run from "./run.js";
 import passport from "passport"
 import cookieParser from 'cookie-parser';
 import initializePassport from "./config/passport.config.js";
+import dotenv from 'dotenv';
+dotenv.config()
 
-
+const port= process.env.PORT
 const app = express();
-
+console.log(port)
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(__dirname+'/public'));
@@ -41,7 +43,7 @@ try {
     dbName: BD_NAME
     });
 
-    const httpServer = app.listen(8080, () => console.log('Server Up!!!'));
+    const httpServer = app.listen(port, () => console.log('Server Up!!!'));
     const socketServer = new Server(httpServer);
     httpServer.on('error', (e) => console.log('ERROR:' + e));
 
