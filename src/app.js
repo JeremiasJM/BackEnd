@@ -8,7 +8,7 @@ import MongoStore from 'connect-mongo';
 import run from "./run.js";
 import passport from "passport"
 import cookieParser from 'cookie-parser';
-import initializePassport from "./confing/passport.confing.js";
+import initializePassport from "./config/passport.config.js";
 
 
 const app = express();
@@ -20,15 +20,12 @@ app.use(cookieParser())
 app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname+'/views')
 app.set('view engine', 'handlebars')
-/* mongodb+srv://topolobo:je10re9mias@cluster0.50zimzz.mongodb.net/ecommerce */
-const URI = 'mongodb://localhost:27017';
+
+const URI = 'mongodb+srv://topolobo:je10re9mias@cluster0.50zimzz.mongodb.net/ecommerce';
 const BD_NAME= 'ecommerce';
 
 app.use(session({
-    store: MongoStore.create({
-        mongoUrl: URI,
-        dbName: BD_NAME
-    }),
+    
     secret:'secret',
     resave:true,
     saveUninitialized:true

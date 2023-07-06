@@ -1,49 +1,46 @@
-import { Router } from "express";
-import { ProductManagerDB } from "../dao/Manager/ProductManagerDB.js";
+import {Router} from "express"
+import productModel from "../dao/models/products.model.js"
 
-const router = Router();
-const prod = new ProductManagerDB();
-
-router.use((req, res, next) => {
-    if (!req.session.user) {
-        res.render("login", {
-            message: {
-                type: "error",
-                title: "Acceso denegado",
-                text: "Inicia sesión para ver los productos",
-            },
-        });
-    } else {
-        next();
-    }
-});
+const router = Router()
 
 router.get("/", async (req, res) => {
-    let { limit, page, query, sort } = req.query;
-    try {
-        const productos = await prod.getProducts(limit, page, query, sort);
-        const user = req.session.user;
-        res.render("products", {
-            productos: productos,
-            user:user,
-            });
-        
-        
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-router.get("/:id", async (req, res) => {
-    let id = req.params.id;
-    try {
-        const foundprod = await prod.getProductById(id);
-        res.render("product", foundprod);
-    } catch (error) {
-        res.status(404).send({
-            error: "Producto no encontrado",
-            servererror: error,
-        });
-    }
-});
 
-export default router;
+    const limit = req.query?.limit || 10
+    const page = req.query?.page || 1
+    const filter = req.query?.filter || ''
+    const sortQuery = req.query?.sort || ''
+    const sortQueryOrder = req.query?.sortorder || 'desc'
+
+    const search = {}
+    if(filter) {
+        search.title = filter
+    }
+    const sort = {}
+    if (sortQuery) {
+        sort[sortQuery] = sortQueryOrder
+    }
+
+    const options = {
+        limit, 
+        page, 
+        sort,
+        lean: true
+    }
+    
+    const data = await productModel.paginate(search, options)
+    console.log(JSON.stringify(data, null, 2, '\t'));
+
+    const user = req.user.user
+    
+    const front_pagination = []
+    for (let index = 1; index <=data.totalPages; index++) {
+        front_pagination.push({
+            page: index,
+            active: index == data.page
+        })
+    }
+
+    res.render('products', {data, user, front_pagination})
+})
+
+export default router

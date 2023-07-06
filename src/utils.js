@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export default __dirname;
 
-export const JWT_PRIVATE_KEY = "secret";
-export const JWT_COOKIE_NAME = "CookieToken";
+export const JWT_PRIVATE_KEY = 'secret'
+export const JWT_COOKIE_NAME = 'coderCookieToken'
 
 export const createHash = (password) => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -27,7 +27,7 @@ export const extractCookie = req => {
   return (req && req.cookies) ? req.cookies[JWT_COOKIE_NAME] : null;
 };
 
-export const passportCall = (strategy) => {
+export const passportCall = strategy => {
   return async (req, res, next) => {
     passport.authenticate(strategy, function (err, user, info) {
       if (err) return next(err);

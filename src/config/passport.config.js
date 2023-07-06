@@ -72,14 +72,14 @@ const initializePassport = () => {
           const result = await UserModel.create(newUser);
           return done(null, result);
         } catch (error) {
-          return done("Error en passport REGISTER " + error);
+          return done("[LOCAL]  Error en passport REGISTER " + error);
         }
       }
     )
   );
 
   passport.use(
-    "login",
+    'login',
     new LocalStrategy(
       {
         usernameField: "email",
@@ -92,30 +92,26 @@ const initializePassport = () => {
             return done(null, user);
           }
 
-          if (!isValidPassword(user, password)) return done(null, false);
+          if (!isValidPassword(user, password)) return done(null, false)
+          
           const token = generateToken(user)
           user.token= token
 
           return done(null, user);
         } catch (error) {
-          done("error");
+          
         }
       }
     )
   );
 
-  passport.use(
-    "jwt",
-    new JWTStrategy(
-      {
-        jwtFromRequest: ExtractJwt.fromExtractors([extractCookie]),
-        sercretOrKey: JWT_PRIVATE_KEY
-      },
-      async (jwt_payload, done) => {
-        done(null, jwt_payload);
-      }
-    )
-  );
+  passport.use('jwt', new JWTStrategy({
+    jwtFromRequest:ExtractJwt.fromExtractors([extractCookie]),
+    secretOrKey: JWT_PRIVATE_KEY
+
+  },async(jwt_payload,done)=>{
+    done(null, jwt_payload)
+  }))
 
   passport.serializeUser((user, done) => {
     done(null, user._id);

@@ -1,75 +1,79 @@
-import { Router } from "express";
-import { ProductManagerDB } from "../dao/Manager/ProductManagerDB.js";
+import {Router} from "express"
+import productModel from "../dao/models/products.model.js"
 
-const productRouter = Router();
-const prod = new ProductManagerDB();
+const router = Router()
 
-productRouter.use((req, res, next) => {
-    if (!req.session.user) {
-        res.status(401).send({error:5,errortext:'Acceso no autorizado'});
-    } else {
-        next()
-    }
-});
-productRouter.get("/", async (req, res) => {
-    let { limit = 10, page = 1, query, sort } = req.query;
+router.get("/", async (req, res) => {
+    const products = await productModel.find().lean().exec()
+    const limit = req.query.limit || 5
+    
+    res.json(products.slice(0, parseInt(limit)))
+    
+})
+
+
+router.get("/view", async (req, res) => {
+    const products = await productModel.find().lean().exec()
+    res.render('realTimeProducts', {
+        data: products
+    })
+})
+
+router.get("/:id", async (req, res) => {
+    const id = req.params.id
+    const product = await productModel.findOne({_id: id})
+    res.json({
+        product
+    })
+})
+
+router.delete("/:pid", async (req, res) => {
+    const id = req.params.pid
+    const productDeleted = await productModel.deleteOne({_id: id})
+
+    req.io.emit('updatedProducts', await productModel.find().lean().exec());
+    res.json({
+        status: "Success",
+        massage: "Product Deleted!",
+        productDeleted
+    })
+})
+
+router.post("/", async (req, res) => {
     try {
-        const productos = await prod.getProducts(limit, page, query, sort);
-        res.status(200).send(productos);
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-productRouter.get("/:id", async (req, res) => {
-    let id = req.params.id;
-    try {
-        const foundprod = await prod.getProductById(id);
-        res.status(200).send(foundprod);
+        const product = req.body
+        if (!product.title) {
+            return res.status(400).json({
+                message: "Error Falta el nombre del producto"
+            })
+        }
+        const productAdded = await productModel.create(product)
+        req.io.emit('updatedProducts', await productModel.find().lean().exec());
+        res.json({
+            status: "Success",
+            productAdded
+        })
     } catch (error) {
-        res.status(404).send({
-            error: "Producto no encontrado",
-            servererror: error,
-        });
+        console.log(error)
+        res.json({
+            error
+        })
     }
-});
-productRouter.post("/", async (req, res) => {
-    const producto = req.body;
-    try {
-        const result = await prod.addProduct(producto);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-productRouter.put("/", async (req, res) => {
-    const producto = req.body;
-    try {
-        const result = await prod.updateProduct(producto);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(200).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-productRouter.delete("/:id", async (req, res) => {
-    let id = req.params.id;
-    try {
-        const result = await prod.deleteProduct(id);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(200).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
+})
 
-export default productRouter;
+router.put("/:pid", async (req, res) => {
+    const id = req.params.pid
+    const productToUpdate = req.body
+
+    const product = await productModel.updateOne({
+        _id: id
+    }, productToUpdate)
+    req.io.emit('updatedProducts', await productModel.find().lean().exec());
+    res.json({
+        status: "Success",
+        product
+    })
+})
+
+
+export default router

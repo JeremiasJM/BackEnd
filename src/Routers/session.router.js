@@ -27,8 +27,8 @@ sessionRouter.get("/login", (req, res) => {
 });
 
 sessionRouter.post(
-  "/login",
-  passport.authenticate("login", { failureRedirect: "/session/failLogin" }),
+  '/login',
+  passport.authenticate('login', { failureRedirect: '/session/failLogin' }),
   async (req, res) => {
     if (!req.user) {
       return res
@@ -36,13 +36,6 @@ sessionRouter.post(
         .send({ status: "error", error: "Invalid creadentials" });
     }
 
-    req.session.user = {
-      first_name: req.user.first_name,
-      last_name: req.user.last_name,
-      email: req.user.email,
-      age: req.user.age,
-      rol: req.user.rol,
-    }
     res.cookie(JWT_COOKIE_NAME, req.user.token).redirect("/products");
   }
 );
@@ -66,13 +59,11 @@ sessionRouter.get(
   }
 );
 
-sessionRouter.get("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log("err");
-      res.status(500).render("errors/base", { error: err });
-    } else res.redirect("/session/login");
-  });
+sessionRouter.get('/logout', (req, res) => {
+ res.clearCookie(JWT_COOKIE_NAME).redirect('/session/login')
 });
+
+
+
 
 export default sessionRouter;

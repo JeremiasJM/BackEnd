@@ -1,57 +1,44 @@
-<link rel="stylesheet" href="/css/productsStyles.css">
-<h2>Productos</h2>
-<div class="filters">
-    <div class="user">
-        <div class="info">Bienvenido {{user.first_name}} {{user.last_name}} ({{user.email}} / {{user.role}})</div>
-        <a href='/session/logout'>Cerrar sessión</a>
-    </div>
-    <div class="category">
-        <a href='products'>Todas las categorías</a>
-        <a href='?query={"category":"primero"}'>Primero </a>
-        <a href='?query={"category":"segundo"}'>Segundo</a>
-        <a href='?query={"category":"tercero"}'>Tercero</a>
-        <a href='?query={"category":"cuarto"}'>Cuarto</a>
-        <a href='?query={"category":"quinto"}'>Quinto</a>
-      
-    </div>
-    <div class="stock">
-        <a href='?query={"stock":{"$gt":"0"}}'>Productos con stock</a>
-        <a href='products'>Todos los productos</a>
-    </div>
-</div>
-<div class="products">
-{{#each productos.payload}}
-    <div class="product">
-        <h3>{{this.title}}</h3>
-        <img src="https://sinteplastconstruccion.com.ar/assets/img/sinteplastconstruccion.com.ar/photos/w300/{{this.thumbnails}}"  alt="foto producto" width="100">
-        <h4>{{this.description}}</h4>
-        <p>Precio: ${{this.price}}</p>
-        <p>Stock: {{this.stock}}</p>
-        <input class type="button" value="Agregar al carro">
-        <a href="../products/{{this.id}}" class="verproducto">Ver detalles</a>
-    </div>
-{{/each}}
-</div>
-<div class="paginado">
-        {{#if hasPrevPage }}
-            <a class="avtive" href='{{firstLink}}'>Primera</a>
-            <a class="active" href='{{prevLink}}'>Anterior</a>
-        {{else}}
-            <a class="disabled">Primera</a>
-            <a class="disabled">Anterior</a>
-        {{/if}}
-        {{#if hasNextPage }}
-            <a class="avtive" href='{{nextLink}}'>Siguiente</a>
-            <a class="active"href='{{lastLink}}'>Ultima</a>
-        {{else}}
-            <a class="disabled">Siguiente</a>
-            <a class="disabled">Ultima</a>
-        {{/if}}
-</div>
-<div class="limite">
-    <a href="?limit=5">ver 5</a>
-    <a href="?limit=10">ver 10</a>
-    <a href="?limit=20">ver 20</a>
-    <a href="?limit=50">ver 50</a>
-</div>
-<script src="../scripts/productsScript.js"></script>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Img</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Description</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Codigo</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data.docs}}
+      <tr>
+        <td>{{this.thumbnails}} </td>
+        <td>{{this.title}}</td>
+        <td>{{this.description}}</td>
+        <td>${{this.price}}</td>
+        <td>{{this.code}}</td>
+        <td>{{this.category}}</td>
+        <td>{{this.stock}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item {{#if data.hasPrevPage}}{{else}}disabled{{/if}}">
+        <a class="page-link" href="/products?page={{data.prevPage}}">Anterior</a>
+    </li>
+    {{#each front_pagination}}
+        <li class="page-item {{#if this.active}}active{{/if}}">
+            <a class="page-link" href="/products?page={{this.page}}">{{this.page}}</a>
+        </li>
+    {{/each}}
+    <li class="page-item {{#if data.hasNextPage}}{{else}}disabled{{/if}}">
+        <a class="page-link" href="/products?page={{data.nextPage}}">Siguiente</a>
+        </li>
+  </ul>
+</nav>
+
+<div id="moving"></div>

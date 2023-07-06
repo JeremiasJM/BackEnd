@@ -1,122 +1,66 @@
-import { Router } from "express";
-import { CartManagerDB } from "../dao/Manager/CartManagerDB.js";
+import { Router } from "express"
+import CartManager from "../dao/Manager/CartManagerDB.js"
+import cartModel from "../dao/models/carts.model.js"
 
-const cartsRouter = Router();
-const carro = new CartManagerDB();
+const cartManager = new CartManager("carts.json")
+const router = Router()
 
-cartsRouter.get("/", async (req, res) => {
-    try {
-        const result = await carro.getCarts();
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
+router.get("/", async (req, res) => {
+    const carts = await cartModel.find().lean().exec()
+    res.json({ carts })
+})
+
+router.get("/:id", async (req, res) => {
+    const id = req.params.id
+    const cart = await cartModel.findOne({_id: id})
+    res.json({ cart })
+})
+
+router.post("/", async (req, res) => {
+    const newCart = await cartModel.create({})
+
+    res.json({status: "Success", newCart})
+})
+
+router.delete("/:cid/product/:pid", async (req, res) => {
+    const cartID = req.params.cid
+    const productID = req.params.pid
+
+    const cart = await cartModel.findById(cartID)
+    if(!cart) return res.status(404).json({status: "error", error: "Cart Not Found"})
+
+    const productIDX = cart.products.findIndex(p => p.id == productID)
+    
+    if (productIDX <= 0) return res.status(404).json({status: "error", error: "Product Not Found on Cart"})
+
+    cart.products = cart.products.splice(productIDX, 1)
+    await cart.save()
+    
+    res.json({status: "Success", cart})
+})
+
+router.post("/:cid/product/:pid", async (req, res) => {
+    const cartID = req.params.cid
+    const productID = req.params.pid
+    const quantity= req.body.quantity || 1
+    const cart = await cartModel.findById(cartID)
+
+    let found = false
+    for (let i = 0; i < cart.products.length; i++) {
+        if (cart.products[i].id == productID) {
+            cart.products[i].quantity++
+            found = true
+            break
         }
-    } catch (err) {
-        res.status(400).send(err);
     }
-});
-cartsRouter.get("/:cid", async (req, res) => {
-    const cid = req.params.cid;
-    try {
-        const result = await carro.getCartById(cid);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
+    if (found == false) {
+        cart.products.push({ id: productID, quantity})
     }
-});
-cartsRouter.post("/", async (req, res) => {
-    try {
-        const result = await carro.addCart();
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-cartsRouter.post("/:cid/product/:pid", async (req, res) => {
-    const newCartProduct = {
-        cid: req.params.cid,
-        pid: req.params.pid,
-    };
-    try {
-        const result = await carro.addProduct(newCartProduct);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-cartsRouter.delete("/:cid", async (req, res) => {
-    const cid = req.params.cid;
-    try {
-        const result = await carro.deleteAllProducts(cid);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
-    const deleteCartProduct = {
-        cid: req.params.cid,
-        pid: req.params.pid,
-    };
-    try {
-        const result = await carro.deleteProduct(deleteCartProduct);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-cartsRouter.put("/:cid/product/:pid", async (req, res) => {
-    const updateProduct = {
-        cid: req.params.cid,
-        pid: req.params.pid,
-        qty: req.body.qty,
-    };
-    console.log(updateProduct);
-    try {
-        const result = await carro.updateProductQty(updateProduct);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-cartsRouter.put("/:cid", async (req, res) => {
-    const cid = req.params.cid;
-    const products = req.body;
-    console.log(cid,products)
-    try {
-        const result = await carro.updateAllProducts(cid, products);
-        if (result.error) {
-            res.status(400).send(result);
-        } else {
-            res.status(201).send(result);
-        }
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-export default cartsRouter;
+
+    await cart.save()
+
+
+    res.json({status: "Success", cart})
+})
+
+export default router
