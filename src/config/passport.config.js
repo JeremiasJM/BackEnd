@@ -10,6 +10,7 @@ import {
 } from "../utils.js";
 import { JWT_PRIVATE_KEY } from "../utils.js";
 import GitHubStrategy from "passport-github2";
+import env from './environment.config.js'
 
 const LocalStrategy = local.Strategy
 const JWTStrategy = passport_jwt.Strategy
@@ -19,9 +20,9 @@ const initializePassport = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.59289bd6a5c20a6c",
-        clientSecret: "dc88612a8a126ed14a7e460176ad190a72546c9a",
-        callbackURL: "http://localhost:8080/session/githubcallback",
+        clientID: env.clientID,
+        clientSecret: env.clientSecret,
+        callbackURL: env.callbackURL,
       },
       async (accessToken, refreshToken, profile, done) => {
         console.log(profile);

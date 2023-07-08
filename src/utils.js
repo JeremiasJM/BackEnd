@@ -3,6 +3,9 @@ import { dirname } from "path";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import passport from "passport";
+import  env from './config/environment.config.js'
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export default __dirname;
@@ -19,12 +22,12 @@ export const isValidPassword = (user, password) => {
 };
 
 export const generateToken = user => {
-  const token = jwt.sign({ user }, JWT_PRIVATE_KEY, { expiresIn: '24h' });
+  const token = jwt.sign({ user }, env.jwt_private_key, { expiresIn: '24h' });
   return token;
 };
 
 export const extractCookie = req => {
-  return (req && req.cookies) ? req.cookies[JWT_COOKIE_NAME] : null;
+  return (req && req.cookies) ? req.cookies[env.jwt_cookie_name] : null;
 };
 
 export const passportCall = strategy => {
